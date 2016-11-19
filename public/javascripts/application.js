@@ -7,13 +7,19 @@ var appendOutput = function(output) {
 }
 
 es.addEventListener("stdout", function(e) {
-  appendOutput(e.data);
+  var line = document.createElement("xmp");
+  line.innerHTML = e.data;
+
+  appendOutput(line.outerHTML);
 });
 
 es.addEventListener("stderr", function(e) {
+  var line = document.createElement("xmp");
+  line.innerHTML = e.data;
+
   var errorLine = document.createElement("span");
   errorLine.className = "Task_output-contentError";
-  errorLine.innerHTML = e.data;
+  errorLine.innerHTML = line.outerHTML;
 
   appendOutput(errorLine.outerHTML);
 });

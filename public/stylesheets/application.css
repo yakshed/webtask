@@ -266,6 +266,10 @@ div.Wrapper {
   background-color: #333;
   padding: 1em 2em;
   color: #9edbf9; }
+  .Task_output xmp {
+    margin: 0;
+    padding: 0;
+    line-height: 0; }
 
 .Task_output-contentError {
   color: #e43431; }

@@ -93,6 +93,12 @@ div.Wrapper {
   background-color: $dark-gray;
   padding: 1em 2em;
   color: $light-blue;
+
+  xmp {
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+  }
 }
 
 .Task_output-contentError {
