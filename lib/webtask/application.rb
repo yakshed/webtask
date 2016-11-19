@@ -3,6 +3,8 @@ module Webtask
     set :server, "thin"
     set :output_streams, {}
     set :public_folder, File.dirname(__FILE__) + "/public"
+    set :bind, Webtask::CLI.instance.bind
+    set :port, Webtask::CLI.instance.port
 
     RakeApplication.build_task_endpoints(self)
 

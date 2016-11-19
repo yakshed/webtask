@@ -1,5 +1,12 @@
 #!/usr/bin/env ruby
 
-require "webtask"
+require "clap"
+require "webtask/cli"
 
+Clap.run ARGV,
+  "-b" => lambda { |bind| Webtask::CLI.instance.bind = bind },
+  "-p" => lambda { |port| Webtask::CLI.instance.port = Integer(port) },
+  "-h" => lambda { Webtask::CLI.instance.show_help }
+
+require "webtask"
 Webtask::Application.run!

@@ -30,7 +30,7 @@ module Webtask
         return @rake_app if @rake_app
 
         @rake_app = Rake.application
-        @rake_app.init
+        @rake_app.options.rakelib = [ "rakelib" ]
         @rake_app.load_rakefile
 
         return @rake_app
