@@ -13,6 +13,16 @@ def options_for(argument)
   end
 end
 
+desc "Prepare everything"
+task :prepare do
+  puts "Prepare!"
+end
+
+desc "Task with prerequisites"
+task :do_something => %(prepare) do
+  puts "DO IT!!"
+end
+
 desc "Prints the current time in `/tmp/webrake`"
 task :update_timestamp do
   File.open("/tmp/webrake", "w+") do |f|

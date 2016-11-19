@@ -41,6 +41,12 @@
                 %span.Task_description
                   :markdown
                     #{task.comment}
+              .Task_header
+                %h3.Task_name
+                  Prerequisites
+                %span.Task_description
+                  :markdown
+                    #{task.prerequisite_tasks.map(&:name).inspect}
               .Task_actions
                 .Task_actions-button
                   %form{ action: "/#{task.name}", method: :post }
