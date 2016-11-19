@@ -1,62 +1,6 @@
-require "rake"
-require "json"
-require "yaml"
-require "net/http"
-require "uri"
+require "bundler/gem_tasks"
+require "rspec/core/rake_task"
 
-config = YAML.load_file(".config")
+RSpec::Core::RakeTask.new(:spec)
 
-def options_for(argument)
-  case argument
-  when :channel
-    %w(@dirk @bascht)
-  end
-end
-
-desc "Prepare everything"
-task :prepare do
-  puts "Prepare!"
-end
-
-desc "Task with prerequisites"
-task :do_something => %(prepare) do
-  puts "DO IT!!"
-end
-
-desc "Long running task with output"
-task :long_running_task do
-  File.foreach("test.log") do |line|
-    if rand < 0.2
-      $stderr.puts line
-    else
-      puts line
-    end
-  end
-end
-
-desc "Prints the current time in `/tmp/webrake`"
-task :update_timestamp do
-  File.open("/tmp/webrake", "w+") do |f|
-    f.puts Time.now
-  end
-end
-
-desc "Send Notification to Slack"
-task :notify, %i(notification) do |_t, args|
-  slack_payload = {
-    text: args[:notification],
-    channel: "@dirk"
-  }
-
-  Net::HTTP.post_form(URI(config["slack_webhook_url"]), payload: slack_payload.to_json)
-end
-
-desc "Send a Notification with predefined options"
-task :notify_with_option, %i(notification channel) do |_t, args|
-  slack_payload = {
-    text: args[:notification],
-    channel: args[:channel]
-  }
-
-  Net::HTTP.post_form(URI(config["slack_webhook_url"]), payload: slack_payload.to_json)
-end
+task :default => :spec

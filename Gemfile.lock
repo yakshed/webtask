@@ -1,3 +1,13 @@
+PATH
+  remote: .
+  specs:
+    webtask (0.1.0)
+      haml (~> 4.0.7)
+      markdown (~> 1.2.0)
+      rake
+      sinatra (~> 1.4.7)
+      thin (~> 1.7.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -16,6 +26,7 @@ GEM
     coderay (1.1.1)
     concurrent-ruby (1.0.2)
     daemons (1.2.4)
+    diff-lcs (1.2.5)
     eventmachine (1.2.1)
     haml (4.0.7)
       tilt
@@ -40,6 +51,19 @@ GEM
     rack-protection (1.5.3)
       rack
     rake (11.3.0)
+    rspec (3.4.0)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+    rspec-core (3.4.4)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-mocks (3.4.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
     rubyzip (1.2.0)
     sass (3.4.22)
     sinatra (1.4.7)
@@ -66,18 +90,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bitters
-  bourbon
-  haml
-  markdown
-  neat
-  pry
-  rake
-  sinatra
-  thin
-
-RUBY VERSION
-   ruby 2.3.1p112
+  bitters (~> 1.2.0)
+  bourbon (~> 4.2.7)
+  bundler (~> 1.12)
+  neat (~> 1.8.0)
+  pry (~> 0.10)
+  rspec (~> 3.0)
+  webtask!
 
 BUNDLED WITH
    1.12.5

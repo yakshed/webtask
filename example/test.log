@@ -1,0 +1,21 @@
+default	11:14:36.992988 +0100	iTunes	Setting identical now playing info, skipping update.
+default	11:14:37.029103 +0100	securityd	port 71755 is dead
+default	11:14:37.029147 +0100	securityd	0x7fff56f128d0 dead connection 71755
+default	11:14:37.029194 +0100	securityd	Connection 0x7f965c624fa0 aborted
+default	11:14:37.029228 +0100	securityd	releasing client connection 0x7f965c624fa0
+default	11:14:37.029272 +0100	securityd	port 29879 is dead
+default	11:14:37.029316 +0100	securityd	0x7fff56f128d0 dead connection 29879
+default	11:14:37.029353 +0100	securityd	Connection 0x7f965c625da0 aborted
+default	11:14:37.029384 +0100	securityd	releasing client connection 0x7f965c625da0
+default	11:14:37.029427 +0100	apsd	peer(91137) received XPC_ERROR_CONNECTION_INVALID
+default	11:14:37.029685 +0100	UserEventAgent	Completed XPC Activity: com.apple.AddressBook.ScheduledSync
+default	11:14:37.030415 +0100	UserEventAgent	Rescheduling XPC Activity: com.apple.AddressBook.ScheduledSync
+default	11:14:37.030448 +0100	ContactsAccountsService	__51-[ACRemoteAccountStoreSession _configureConnection]_block_invoke.62 (57) "The connection to ACDAccountStore was invalidated."
+default	11:14:37.030762 +0100	UserEventAgent	SUBMITTING: <private>
+default	11:14:37.030900 +0100	DuetHeuristic-BM	<private>
+default	11:14:37.031412 +0100	DuetHeuristic-BM	<private>
+default	11:14:37.031732 +0100	DuetHeuristic-BM	<private>
+default	11:14:37.031898 +0100	securityd	port 63823 is dead
+default	11:14:37.031942 +0100	securityd	0x7fff56f128d0 dead process 63823
+default	11:14:37.031981 +0100	securityd	0x7f965c6245b0 client release: 91137
+default	11:14:37.032012 +0100	opendirectoryd	disconnect module connection

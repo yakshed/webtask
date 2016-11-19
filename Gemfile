@@ -1,15 +1,4 @@
 source "https://rubygems.org"
 
-ruby "2.3.1"
-
-gem "sinatra"
-gem "rake"
-gem "haml"
-gem "markdown"
-gem "thin"
-
-gem "bourbon"
-gem "neat"
-gem "bitters"
-
-gem "pry"
+# Specify your gem's dependencies in webtask.gemspec
+gemspec
