@@ -1,0 +1,99 @@
+@import "bourbon/bourbon";
+@import "base/base";
+@import "neat/neat";
+
+body {
+  margin: 0;
+}
+
+nav.Webrake {
+  background-color: $blue;
+  padding: 1.5em 2em 1.5em 1em;
+
+  h1 {
+    float: right;
+    font-size: 1em;
+    margin-bottom: 0;
+    color: $light-gray;
+
+    a {
+      color: $light-blue;
+    }
+  }
+
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+h2.Introduction {
+  font-size: 1.5em;
+}
+
+section.Container {
+  @include outer-container;
+
+  margin: 2em 0;
+}
+
+div.Wrapper {
+  @include span-columns(8);
+  @include shift(2);
+}
+
+.Notification {
+  background-color: $blue;
+  color: $light-gray;
+  border-radius: 10px;
+  @include animation-name(fadeout);
+  @include animation-duration(2s);
+  @include animation-timing-function(ease-in);
+  @include animation-delay(1s);
+
+  p {
+    padding: .5em 1em;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.Task {
+  @include outer-container;
+}
+
+.Task_header {
+  @include fill-parent();
+  @include row(table);
+}
+
+.Task_name {
+  @include span-columns(4);
+  @include pad();
+}
+
+.Task_description {
+  @include span-columns(8);
+  @include reset-display;
+  @include pad();
+}
+
+.Task_actions {
+  @include fill-parent();
+  @include row(table);
+}
+
+.Task_actions-button {
+  @include span-columns(12);
+  @include reset-display;
+  @include pad();
+}

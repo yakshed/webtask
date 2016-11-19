@@ -1,0 +1,57 @@
+!!! 5
+%html{ lang: "en" }
+  %head
+    %meta{ charset: "utf-8" }
+    %title
+      Webrake
+    %link{ :href => "/stylesheets/application.css", :media => "all", :rel => "stylesheet" }
+
+  %body
+    %nav.Webrake
+      %h1
+        &mdash; A web GUI for your Rake tasks
+
+    %section.Container
+
+      .Wrapper
+
+        - if notice
+          .Notification
+            %p
+              %strong Info
+              = notice
+
+        %h2.Introduction
+          :markdown
+            The following tasks where discovered in your `Rakefile`
+
+        %hr
+
+        %ul.Tasks
+          - tasks.each do |task|
+            %li.Task
+              .Task_header
+                %h3.Task_name
+                  Name
+                %span.Task_description
+                  = task.name
+              .Task_header
+                %h3.Task_name
+                  Description
+                %span.Task_description
+                  :markdown
+                    #{task.comment}
+              .Task_actions
+                .Task_actions-button
+                  %form{ action: "/#{task.name}", method: :post }
+                    %input{ value: "Run Task", type: "submit" }
+
+:javascript
+  function removeElement(event) {
+    if (event.animationName === 'fadeout') {
+      event.target.parentNode.removeChild(event.target);
+    }
+  }
+
+  document.body.addEventListener('animationend', removeElement);
+  document.body.addEventListener('webkitAnimationEnd', removeElement);
