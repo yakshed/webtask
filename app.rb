@@ -2,13 +2,11 @@ require "sinatra"
 require "haml"
 require "rake"
 require "yaml"
+require "digest"
 
-config = YAML.load_file(".config")
-
-enable :sessions
-
+set :server, "thin"
+set :output_streams, {}
 set :public_folder, File.dirname(__FILE__) + '/public'
-set :session_secret, config["session_secret"]
 
 # Required to access task descriptions
 Rake::TaskManager.record_task_metadata = true
@@ -38,10 +36,28 @@ class TaskWrapper < SimpleDelegator
   end
 end
 
-get "/" do
-  notice = session.delete(:notice)
+class StreamOut
+  def initialize(stream)
+    @stream = stream
+  end
 
-  haml :index, format: :html5, locals: { tasks: rake_app.tasks.map { |task| TaskWrapper.new(task) }, notice: notice }
+  def write(data)
+    @stream << "data: #{data}\n\n"
+  end
+end
+
+get "/" do
+  haml :index, format: :html5, locals: { tasks: rake_app.tasks.map { |task| TaskWrapper.new(task) } }
+end
+
+get "/stream/:stream_id", provides: "text/event-stream" do
+  stream :keep_open do |out|
+    next unless settings.output_streams.has_key?(params[:stream_id])
+
+    settings.output_streams[params[:stream_id]].call(StreamOut.new(out))
+
+    settings.output_streams.delete(params[:stream_id])
+  end
 end
 
 rake_app.tasks.each do |task|
@@ -52,12 +68,22 @@ rake_app.tasks.each do |task|
       params[:args][arg_name]
     end
 
-    task.invoke(*argument_list)
-    task.reenable
+    stream_id = Digest::SHA1.hexdigest(rand.to_s)
+    settings.output_streams[stream_id] = ->(output) do
+      begin
+        old_stdout = $stdout
+        $stdout = output
+        task.invoke(*argument_list)
+        task.reenable
 
-    session[:notice] = "Successfully executed task #{task.name.inspect}"
+        output.write("\n")
+        output.write("All Done!")
+      ensure
+        $stdout = old_stdout
+      end
+    end
 
-    redirect to("/")
+    haml :result, format: :html5, locals: { task: task, stream_id: stream_id }
   end
 
 end

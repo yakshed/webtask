@@ -6,7 +6,7 @@ gem "sinatra"
 gem "rake"
 gem "haml"
 gem "markdown"
-gem "puma"
+gem "thin"
 
 gem "bourbon"
 gem "neat"

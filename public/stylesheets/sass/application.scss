@@ -43,30 +43,6 @@ div.Wrapper {
   @include shift(2);
 }
 
-.Notification {
-  background-color: $blue;
-  color: $light-gray;
-  border-radius: 10px;
-  @include animation-name(fadeout);
-  @include animation-duration(2s);
-  @include animation-timing-function(ease-in);
-  @include animation-delay(1s);
-
-  p {
-    padding: .5em 1em;
-  }
-}
-
-@keyframes fadeout {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
 .Task {
   @include outer-container;
 
@@ -109,4 +85,12 @@ div.Wrapper {
   @include span-columns(12);
   @include reset-display;
   @include pad();
+}
+
+.Task_output {
+  overflow: scroll;
+  border-radius: 5px;
+  background-color: $dark-gray;
+  padding: 1em 2em;
+  color: $light-blue;
 }

@@ -1,0 +1,36 @@
+!!! 5
+%html{ lang: "en" }
+  %head
+    %meta{ charset: "utf-8" }
+    %title
+      Webrake
+    %link{ href: "/stylesheets/application.css", media: "all", rel: "stylesheet" }
+    %script{ src: "https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" }
+
+  %body
+    %nav.Webrake
+      %h1
+        &mdash; A web GUI for your Rake tasks
+
+    %section.Container
+
+      .Wrapper
+
+        %h2.Introduction
+          Output of
+          %code= task.name
+
+        %hr
+
+        %pre.Task_output
+          %code#Task_output-content
+
+        %hr
+        %a{ href: "/" } &larr; Back to List
+
+:javascript
+  var es = new EventSource("/stream/#{stream_id}");
+  es.onmessage = function(e) {
+    console.log(e);
+    $("#Task_output-content").append(e.data + "\n")
+  };

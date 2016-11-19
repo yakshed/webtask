@@ -4,7 +4,7 @@
     %meta{ charset: "utf-8" }
     %title
       Webrake
-    %link{ :href => "/stylesheets/application.css", :media => "all", :rel => "stylesheet" }
+    %link{ href: "/stylesheets/application.css", media: "all", rel: "stylesheet" }
 
   %body
     %nav.Webrake
@@ -14,12 +14,6 @@
     %section.Container
 
       .Wrapper
-
-        - if notice
-          .Notification
-            %p
-              %strong Info
-              = notice
 
         %h2.Introduction
           :markdown
@@ -61,14 +55,3 @@
                           - else
                             %input.Task_action-input{ type: "text", name: "args[#{arg_name}]", placeholder: arg_name }
                     %input{ value: "Run Task", type: "submit" }
-
-
-:javascript
-  function removeElement(event) {
-    if (event.animationName === 'fadeout') {
-      event.target.parentNode.removeChild(event.target);
-    }
-  }
-
-  document.body.addEventListener('animationend', removeElement);
-  document.body.addEventListener('webkitAnimationEnd', removeElement);

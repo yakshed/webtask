@@ -23,6 +23,14 @@ task :do_something => %(prepare) do
   puts "DO IT!!"
 end
 
+desc "Long running task with output"
+task :long_running_task do
+  File.foreach("test.log") do |line|
+    puts line
+    sleep 1
+  end
+end
+
 desc "Prints the current time in `/tmp/webrake`"
 task :update_timestamp do
   File.open("/tmp/webrake", "w+") do |f|

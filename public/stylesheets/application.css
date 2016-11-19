@@ -217,30 +217,6 @@ div.Wrapper {
   div.Wrapper:last-child {
     margin-right: 0; }
 
-.Notification {
-  background-color: #be1d77;
-  color: #ddd;
-  border-radius: 10px;
-  -webkit-animation-name: fadeout;
-  -moz-animation-name: fadeout;
-  animation-name: fadeout;
-  -webkit-animation-duration: 2s;
-  -moz-animation-duration: 2s;
-  animation-duration: 2s;
-  -webkit-animation-timing-function: ease-in;
-  -moz-animation-timing-function: ease-in;
-  animation-timing-function: ease-in;
-  -webkit-animation-delay: 1s;
-  -moz-animation-delay: 1s;
-  animation-delay: 1s; }
-  .Notification p {
-    padding: .5em 1em; }
-
-@keyframes fadeout {
-  from {
-    opacity: 1; }
-  to {
-    opacity: 0; } }
 .Task {
   max-width: 1200px;
   margin-left: auto;
@@ -283,5 +259,12 @@ div.Wrapper {
   padding: 2.35765%; }
   .Task_actions-button:last-child {
     margin-right: 0; }
+
+.Task_output {
+  overflow: scroll;
+  border-radius: 5px;
+  background-color: #333;
+  padding: 1em 2em;
+  color: #9edbf9; }
 
 /*# sourceMappingURL=application.css.map */
