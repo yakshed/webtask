@@ -48,7 +48,12 @@
                       %fieldset
                         %legend Arguments
                         - task.arg_names.each do |arg_name|
-                          %input.Task_action-input{ type: "text", name: "args[#{arg_name}]", placeholder: arg_name }
+                          - if task.has_options_for?(arg_name)
+                            %select.Task_action-input{ name: "args[#{arg_name}]" }
+                              - task.options[arg_name].each do |arg_option|
+                                %option{ value: arg_option }= arg_option
+                          - else
+                            %input.Task_action-input{ type: "text", name: "args[#{arg_name}]", placeholder: arg_name }
                     %input{ value: "Run Task", type: "submit" }
 
 
