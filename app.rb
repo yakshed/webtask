@@ -1,10 +1,14 @@
 require "sinatra"
 require "haml"
 require "rake"
+require "yaml"
 
-set :public_folder, File.dirname(__FILE__) + '/public'
+config = YAML.load_file(".config")
 
 enable :sessions
+
+set :public_folder, File.dirname(__FILE__) + '/public'
+set :session_secret, config["session_secret"]
 
 # Required to access task descriptions
 Rake::TaskManager.record_task_metadata = true
@@ -23,7 +27,12 @@ end
 rake_app.tasks.each do |task|
 
   post "/#{task.name}" do
-    task.invoke
+
+    argument_list = task.arg_names.map do |arg_name| 
+      params[:args][arg_name]
+    end
+
+    task.invoke(*argument_list)
     task.reenable
 
     session[:notice] = "Successfully executed task #{task.name.inspect}"

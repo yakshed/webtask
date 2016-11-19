@@ -44,7 +44,13 @@
               .Task_actions
                 .Task_actions-button
                   %form{ action: "/#{task.name}", method: :post }
+                    - unless task.arg_names.empty?
+                      %fieldset
+                        %legend Arguments
+                        - task.arg_names.each do |arg_name|
+                          %input.Task_action-input{ type: "text", name: "args[#{arg_name}]", placeholder: arg_name }
                     %input{ value: "Run Task", type: "submit" }
+
 
 :javascript
   function removeElement(event) {

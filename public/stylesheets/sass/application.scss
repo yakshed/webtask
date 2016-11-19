@@ -69,6 +69,12 @@ div.Wrapper {
 
 .Task {
   @include outer-container;
+
+  margin-bottom: 1em;
+}
+
+.Task:nth-child(even) {
+  background-color: $light-blue;
 }
 
 .Task_header {
@@ -88,8 +94,15 @@ div.Wrapper {
 }
 
 .Task_actions {
-  @include fill-parent();
-  @include row(table);
+  fieldset {
+    legend {
+      font-size: 1.6em;
+    }
+
+    .Task_action-input {
+      font-size: 1.5em;
+    }
+  }
 }
 
 .Task_actions-button {

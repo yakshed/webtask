@@ -244,11 +244,15 @@ div.Wrapper {
 .Task {
   max-width: 1200px;
   margin-left: auto;
-  margin-right: auto; }
+  margin-right: auto;
+  margin-bottom: 1em; }
   .Task::after {
     clear: both;
     content: "";
     display: block; }
+
+.Task:nth-child(even) {
+  background-color: #9edbf9; }
 
 .Task_header {
   width: 100%;
@@ -266,15 +270,18 @@ div.Wrapper {
   width: 66.66667%;
   padding: 2.35765%; }
 
-.Task_actions {
-  width: 100%;
-  display: table;
-  width: 100%;
-  table-layout: fixed; }
+.Task_actions fieldset legend {
+  font-size: 1.6em; }
+.Task_actions fieldset .Task_action-input {
+  font-size: 1.5em; }
 
 .Task_actions-button {
-  display: table-cell;
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
   width: 100%;
   padding: 2.35765%; }
+  .Task_actions-button:last-child {
+    margin-right: 0; }
 
 /*# sourceMappingURL=application.css.map */
