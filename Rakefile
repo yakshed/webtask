@@ -26,8 +26,11 @@ end
 desc "Long running task with output"
 task :long_running_task do
   File.foreach("test.log") do |line|
-    puts line
-    sleep 1
+    if rand < 0.2
+      $stderr.puts line
+    else
+      puts line
+    end
   end
 end
 

@@ -3,6 +3,7 @@ require "haml"
 require "rake"
 require "yaml"
 require "digest"
+require "open3"
 
 set :server, "thin"
 set :output_streams, {}
@@ -42,6 +43,24 @@ class StreamOut
   end
 
   def write(data)
+    @stream << "event: stdout\n"
+    @stream << "data: #{data}\n\n"
+  end
+end
+
+class StreamError
+  def initialize(stream)
+    @stream = stream
+    @errors = false
+  end
+
+  def errors?
+    @errors
+  end
+
+  def write(data)
+    @errors = true
+    @stream << "event: stderr\n"
     @stream << "data: #{data}\n\n"
   end
 end
@@ -54,7 +73,32 @@ get "/stream/:stream_id", provides: "text/event-stream" do
   stream :keep_open do |out|
     next unless settings.output_streams.has_key?(params[:stream_id])
 
-    settings.output_streams[params[:stream_id]].call(StreamOut.new(out))
+    cmd = settings.output_streams[params[:stream_id]]
+    outputs = { err: StreamError.new(out), out: StreamOut.new(out) }
+
+    outputs[:out].write(">>> Running #{cmd.inspect}...")
+    outputs[:out].write("\n")
+
+    Open3.popen3(cmd) do |_stdin, stdout, stderr, thread|
+      # read each stream from a new thread
+      { out: stdout, err: stderr }.each do |key, io|
+        Thread.new do
+          until (raw_line = io.gets).nil? do
+            outputs[key].write [Time.now, raw_line].join(" - ")
+          end
+        end
+      end
+
+      thread.join # don't exit until the external process is done
+    end
+
+    outputs[:out].write("\n")
+
+    if outputs[:err].errors?
+      outputs[:err].write("There have been errors!")
+    else
+      outputs[:out].write("All Done!")
+    end
 
     settings.output_streams.delete(params[:stream_id])
   end
@@ -68,20 +112,10 @@ rake_app.tasks.each do |task|
       params[:args][arg_name]
     end
 
-    stream_id = Digest::SHA1.hexdigest(rand.to_s)
-    settings.output_streams[stream_id] = ->(output) do
-      begin
-        old_stdout = $stdout
-        $stdout = output
-        task.invoke(*argument_list)
-        task.reenable
+    command = "bundle exec rake #{task.name}[#{argument_list.join(",")}]"
 
-        output.write("\n")
-        output.write("All Done!")
-      ensure
-        $stdout = old_stdout
-      end
-    end
+    stream_id = Digest::SHA1.hexdigest(rand.to_s)
+    settings.output_streams[stream_id] = command
 
     haml :result, format: :html5, locals: { task: task, stream_id: stream_id }
   end
